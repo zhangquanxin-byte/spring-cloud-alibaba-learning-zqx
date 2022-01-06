@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StockController {
     @GetMapping("/stock/reduce/{productId}")
     public String reduce(@PathVariable Integer productId){
+        System.out.println("减库存成功");
         return "减库存成功";
     }
 }

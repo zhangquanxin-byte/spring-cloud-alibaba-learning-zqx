@@ -1,2 +1,8 @@
 server:
   port: 8001
+spring:
+  cloud:
+    nacos:
+      discovery:
+        service: nx-order
+        server-addr: localhost:8848
