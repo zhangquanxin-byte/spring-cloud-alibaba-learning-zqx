@@ -1,8 +1,2 @@
 server:
   port: 11001
-#spring:
-#  cloud:
-#    nacos:
-#      discovery:
-#        service: nx-stock
-#        server-addr: localhost:8848
