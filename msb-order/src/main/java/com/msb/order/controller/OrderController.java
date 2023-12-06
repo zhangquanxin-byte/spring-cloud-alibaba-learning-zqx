@@ -1,9 +1,11 @@
 package com.msb.order.controller;
 
+import com.msb.order.config.StockFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -15,7 +17,11 @@ import java.util.stream.Collectors;
 @RestController
 public class OrderController {
     @Autowired
+    //@LoadBalanced
     private RestTemplate restTemplate;
+
+    @Autowired
+    private StockFeignClient stockFeignClient;
 
     @GetMapping("/order/create")
     public String createOrder(Integer productId,Integer userId){
@@ -29,6 +35,13 @@ public class OrderController {
         // 2、选择一个进行调用
         //
         String result = restTemplate.getForObject("http://msb-stock/stock/reduce/" + productId,String.class);
+        return "下单成功";
+    }
+
+    @GetMapping("/order/create2")
+    public String createOrder(Integer productId){
+        String reduce = stockFeignClient.reduce(productId);
+        log.info("减库存成功：{}",reduce);
         return "下单成功";
     }
 }
